@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login Page</title>
+	<title>Login</title>
    <!--Made with love by Mutiullah Samim -->
    
 	<!--Bootsrap 4 CDN-->
@@ -25,9 +25,8 @@
 			<div class="card-header">
 				<h3>Iniciar Sesión</h3>
 				<div class="d-flex justify-content-end social_icon">
-					<span><i class="fab fa-facebook-square"></i></span>
-					<span><i class="fab fa-google-plus-square"></i></span>
-					<span><i class="fab fa-twitter-square"></i></span>
+					<a href="https://www.facebook.com/5teph.marin"><span><i class="fab fa-facebook-square"></i></span></a>
+					<a href="https://twitter.com/Vylzar"><span><i class="fab fa-twitter-square"></i></span></a>
 				</div>
 			</div>
 			<div class="card-body">
