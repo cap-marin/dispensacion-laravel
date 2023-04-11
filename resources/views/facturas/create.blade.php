@@ -178,17 +178,16 @@
 
         function updateEps(select) {
             const index = Array.from(select.parentNode.parentNode.children).indexOf(select.parentNode);
-            const cliente = {!! $cliente !!};
+            const producto = {!! $productos !!}.find(p => p.id == select.value);
+            const cliente = {!! $clientes !!}.find(p => p.id == select.value);
 
             let eps = cliente.eps;
             //console.log(index);
-            //console.log(cliente.eps);
+            console.log(cliente.eps);
             $('#eps').val(eps);
         }
 
-        $('#subtotal').oninput = function() {
-            alert("cambio")
-        };
+       
         $(document).ready(function() {
 
             // calcular subtotal al cambiar el producto o la cantidad
