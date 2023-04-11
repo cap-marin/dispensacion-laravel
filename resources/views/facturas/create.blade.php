@@ -82,7 +82,7 @@
                                 <td><input type="text" class="form-control" name="lote[]"></td>
                                 <td><input type="date" class="form-control" name="vencimiento[]"></td>
                                 <td><input type="text" class="form-control product-price" id="precio[]" id="precio[]" readonly></td>
-                                <td><input type="text" class="form-control product-subtotal" id="subtotal[]" id="subtotal[]" readonly>
+                                <td><input type="text" class="form-control product-subtotal" id="subtotal[]" name="subtotal[]" readonly>
                                 </td>
 								
                                 <td><button type="button" class="btn btn-danger btn-sm delete-row"><i
@@ -99,7 +99,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-primary" type="button" id="calcular-total">Calcular total</button>
                             </div>
-                            <input type="number" class="form-control text-right font-weight-bold" name="total" id="total" readonly>
+                            <input type="number" class="form-control text-right font-weight-bold" name="total" id="total" readonly required>
                         </div>
                     </div>
                     

@@ -51,8 +51,10 @@ class FacturaController extends Controller
 
         $usuario_id = Auth::user()->id;
 
+        $cantidad = $request->cantidad;
+        $subtotal = $request->subtotal;
         echo "request";
-        //var_dump($request->cliente_id);die();
+        
         $factura = new Factura;
         $factura->id_cliente = $request->cliente_id;
         $factura->fecha_venta = now(); //date('Y-m-d');
@@ -65,22 +67,24 @@ class FacturaController extends Controller
         $factura_id = $factura->id;
 
         $productos = $request->producto_id;
-        foreach ($productos as $producto) {
+        foreach ($productos as $key => $producto) {
             //print_r($producto);die();
             $producto_id = $producto;
+            $cantidad = $request->cantidad[$key];
+            $subtotal = $request->subtotal[$key];
             //$cantidad = $producto['cantidad'];
             //$lote = $producto['lote'];
             //$vencimiento = $producto['vencimiento'];
-
+            //print_r(intval($cantidad));die();
             //$vencimiento = $producto['vencimiento'];
             $producto = Producto::find($producto_id);
 
             $facturaLinea = new FactuLinea;
             $facturaLinea->id_formula = $factura_id;
             $facturaLinea->id_producto = $producto_id;
-            $facturaLinea->cantidad = 1; //$request->cantidad;
+            $facturaLinea->cantidad = $cantidad; //$request->cantidad;
             $facturaLinea->precio = $producto->precio;
-            $facturaLinea->total_linea = 1000;
+            $facturaLinea->total_linea = $subtotal;
             $facturaLinea->save();
         }
         //dd($producto);
@@ -110,7 +114,7 @@ class FacturaController extends Controller
         $factura->total = $request->total;
         $factura->save();
 
-        //dd($factura);
+        //dd(intval($request->cantidad));
         $facturaLineas = FactuLinea::where('id_formula', $factura->id)->get();
         $productos = $request->producto_id;
 
@@ -122,18 +126,19 @@ class FacturaController extends Controller
         }
 
         // Agregar o actualizar las factulineas del formulario
-        foreach ($productos as $producto) {
-            //dd($productos);
+        foreach ($productos as $key => $producto) {
             $producto_id = $producto;
-            $cantidad = $request->cantidad;
+            $cantidad = $request->cantidad[$key]; // Obtener la cantidad correspondiente al producto
             $producto = Producto::find($producto_id);
             $precio = $producto->precio;
-
+        
             $facturaLinea = $factura->facturaLineas()->updateOrCreate(
                 ['id_producto' => $producto_id],
-                ['cantidad' => intval($cantidad), 'precio' => $precio, 'subtotal' => $precio * intval($cantidad), 'total_linea' => $request->total]
+                ['cantidad' => $cantidad, 'precio' => $precio, 'subtotal' => $precio * intval($cantidad), 'total_linea' => $request->total]
             );
         }
+
+        
 
         return redirect()->route('facturas.index');
     }
