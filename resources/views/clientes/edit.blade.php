@@ -37,6 +37,10 @@
             <label for="telefono">Teléfono:</label>
             <input type="tel" class="form-control" id="telefono" name="telefono" value="{{ $cliente->telefono }}" required>
         </div>
+        <div class="form-group">
+            <label for="eps">EPS:</label>
+            <input type="text" class="form-control" id="eps" name="eps" value="{{ $cliente->eps }}" required>
+        </div>
         <div class="btn-group">
             <button type="submit" class="btn btn-primary mr-2">Guardar Cambios</button>
             <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-secondary ml-2">Cancelar</a>

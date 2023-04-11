@@ -151,13 +151,13 @@ class FacturaController extends Controller
         return redirect()->route('facturas.index');
     }
 
-    public function getPrecioProducto(Request $request)
+    /*public function getPrecioProducto(Request $request)
     {
         echo "hola" . $request->input('producto_id');
         die();
         $producto = Producto::find($request->input('producto_id'));
         return response()->json(['precio' => $producto->precio]);
-    }
+    }*/
 
     public function show(Factura $factura)
     {
