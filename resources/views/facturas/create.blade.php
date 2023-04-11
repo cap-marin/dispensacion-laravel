@@ -78,19 +78,22 @@
                                     </select>
                                 </td>
                                 <td><input type="number" class="form-control cantidad-producto" name="cantidad[]"
-                                        id="cantidad[]" min="1" value="0" onchange="calcularSubtotal(this)"></td>
+                                        id="cantidad[]" min="1" value="0" onchange="calcularSubtotal(this)">
+                                </td>
                                 <td><input type="text" class="form-control" name="lote[]"></td>
                                 <td><input type="date" class="form-control" name="vencimiento[]"></td>
-                                <td><input type="text" class="form-control product-price" id="precio[]" id="precio[]" readonly></td>
-                                <td><input type="text" class="form-control product-subtotal" id="subtotal[]" name="subtotal[]" readonly>
+                                <td><input type="text" class="form-control product-price" id="precio[]" id="precio[]"
+                                        readonly></td>
+                                <td><input type="text" class="form-control product-subtotal" id="subtotal[]"
+                                        name="subtotal[]" readonly>
                                 </td>
-								
+
                                 <td><button type="button" class="btn btn-danger btn-sm delete-row"><i
                                             class="fas fa-trash-alt"></i></button></td>
                             </tr>
                         </tbody>
                     </table>
-					<div class="form-group">
+                    <div class="form-group">
                         <button type="button" class="btn btn-success btn-sm" id="add-row"><i class="fas fa-plus"></i>
                             Agregar Producto</button>
                     </div>
@@ -99,10 +102,11 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-primary" type="button" id="calcular-total">Calcular total</button>
                             </div>
-                            <input type="number" class="form-control text-right font-weight-bold" name="total" id="total" readonly required>
+                            <input type="number" class="form-control text-right font-weight-bold" name="total"
+                                id="total" readonly>
                         </div>
                     </div>
-                    
+
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="{{ route('facturas.index') }}" class="btn btn-secondary">Cancelar</a>
@@ -123,11 +127,12 @@
 @section('js')
     <script>
         function updatePrice(select) {
+            document.getElementById("total").setAttribute("required", "required");
             const index = Array.from(select.parentNode.parentNode.children).indexOf(select.parentNode);
             let precio = {{ $productos[0]->precio }};
             let lote = '';
             let vencimiento = '';
-			
+
             //let cantidad = select.parentNode.parentNode.children[4].children[0].value;
 
             const producto = {!! $productos !!}.find(p => p.id == select.value);
@@ -155,19 +160,19 @@
             var subtotal = 0;
             const index = Array.from(select.parentNode.parentNode.children).indexOf(select.parentNode);
             let precio = select.parentNode.parentNode.children[4].children[0].value;
-			cantidad = select.parentNode.parentNode.children[1].children[0].value;
+            cantidad = select.parentNode.parentNode.children[1].children[0].value;
             console.log(precio);
             const producto = {!! $productos !!}.find(p => p.id == select.value);
             if (producto) {
                 //precio = producto.precio;
-                
+
                 subtotal = cantidad * precio;
                 console.log(cantidad);
 
                 console.log(subtotal);
-                
+
             }
-			select.parentNode.parentNode.children[5].children[0].value = subtotal;
+            select.parentNode.parentNode.children[5].children[0].value = subtotal;
 
 
             //total += subtotal;
@@ -187,7 +192,7 @@
             $('#eps').val(eps);
         }
 
-       
+
         $(document).ready(function() {
 
             // calcular subtotal al cambiar el producto o la cantidad
@@ -210,7 +215,11 @@
                 });
                 // Actualizar el campo de total
                 $('#total').val(total.toFixed(0));
+
+
             });
+
+
             /* WORKS!
                         function actualizarTotal() {
                             var total = 0;
@@ -241,6 +250,14 @@
             $(document).on('click', '.delete-row', function() {
                 $(this).closest('tr').remove();
             });
+        });
+
+        $('form').on('submit', function(e) {
+            if ($('#total').val() == '') {
+                e.preventDefault(); // Evita que el formulario se envíe si el campo está vacío
+                alert(
+                'Por favor presione el botón "Calcular el total" antes de guardar.'); // Muestra un mensaje de alerta al usuario
+            }
         });
     </script>
 
